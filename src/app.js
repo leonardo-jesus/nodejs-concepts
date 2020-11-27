@@ -14,6 +14,20 @@ app.get("/repositories", (req, res) => {
   return res.json(repositories);
 });
 
+app.get("/repositories/:id", (req, res) => {
+    const { id } = req.params;
+
+    const repositoryIndex = repositories.findIndex(repository => repository.id === id);
+
+    if(repositoryIndex < 0) {
+        return res.status(400).json({ error: 'Project not found' });
+    };
+
+    const repository = repositories[repositoryIndex];
+
+    return res.json(repository);
+  });
+
 app.post("/repositories", (req, res) => {
   const { title, url, techs } = req.body;
 
